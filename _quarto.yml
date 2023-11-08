@@ -3,18 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "mysite"
+  title: "Haejin Kim"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - resources.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: minty
     css: styles.css
     toc: true
+    page-layout: full
 
+editor: visual
 
 
