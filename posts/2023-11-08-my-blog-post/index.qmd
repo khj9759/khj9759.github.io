@@ -9,6 +9,8 @@ author:
     affiliation-url: https://ucsb-meds.github.io/ 
 date: 12-9-2023
 categories: [North_Korea, Data_Science ,MEDS] # self-defined categories
+output: 
+  distill::distill_article: default
 citation: 
   url: https://khj9759.github.io/posts/2022-10-24-my-blog-post/ 
 image: nk2.png
@@ -29,7 +31,7 @@ The fields of data science and the environment should be open sources because en
 
 Despite the necessity for most data to be transparent in safeguarding the environment, numerous countries withhold information due to political motives. Countries like China, Russia, and notably North Korea have a significant impact on global environmental dynamics, yet their data remains undisclosed due to political agendas. While working at the Green Climate Fund, I delved into various nations' National Designated Authority (NDC) reports on reducing greenhouse gas emissions. Although some countries, particularly smaller ones like island nations, demonstrate optimistic goals for emission reduction through renewable energy and electric vehicles, China, Russia, and notably North Korea, present challenges in obtaining crucial environmental data.
 
-![](nk3.png){width="237"}
+![](nk3.png){fig-align="right" width="237"}
 
 Satellite data has been instrumental in acquiring insights into North Korea's forests and land use. However, much of this data remains concealed due to political constraints. During my studies of climate change law at Columbia University, I realized the extent to which environmental science intertwines with legal frameworks, emphasizing the role of political decisions in environmental matters. North Korea faces a similar scenario, heavily reliant on government decisions and propaganda, omitting itself even from the LDCs categories, complicating efforts to assist the country due to a lack of comprehensive data sources.
 
