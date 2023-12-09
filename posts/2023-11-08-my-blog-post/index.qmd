@@ -8,7 +8,7 @@ author:
     affiliation: EDS242 - Ethics and Bias in Environmental Data Science
     affiliation-url: https://ucsb-meds.github.io/ 
 date: 12-9-2023
-categories: [Quarto, R, MEDS] # self-defined categories
+categories: [North_Korea, Data_Science ,MEDS] # self-defined categories
 citation: 
   url: https://khj9759.github.io/posts/2022-10-24-my-blog-post/ 
 image: nk2.png
