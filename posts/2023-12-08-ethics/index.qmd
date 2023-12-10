@@ -12,7 +12,7 @@ categories: [North_Korea, Data_Science ,MEDS] # self-defined categories
 output: 
   distill::distill_article: default
 citation: 
-  url: https://khj9759.github.io/posts/2022-10-24-my-blog-post/ 
+  url: https://khj9759.github.io/posts/2023-12-08-ethics/ 
 image: nk2.png
 draft: False # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
