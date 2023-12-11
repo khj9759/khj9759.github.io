@@ -14,7 +14,7 @@ output:
 citation: 
   url: https://khj9759.github.io/posts/2023-12-08-ethics/ 
 image: nk2.png
-draft: False # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: False # setting this to `true` will prevent your post from appearing on your listing page until you're ready! 
 ---
 
 The yearning for reunification holds great importance for many Koreans, a desire to bridge the gap caused by separation. During the Korean War, my grandparents' move from North to South Korea resulted in the heartbreaking disconnection from our relatives. Despite the passage of time, political barriers have left us unable to reach to their family in the North, leaving a void of information about their well-being. The difficulty in obtaining any updates from North Korea intensifies our distress, leaving us in the dark about the lives of our loved ones there.
@@ -31,7 +31,7 @@ The fields of data science and the environment should be open sources because en
 
 Despite the necessity for most data to be transparent in safeguarding the environment, numerous countries withhold information due to political motives. Countries like China, Russia, and notably North Korea have a significant impact on global environmental dynamics, yet their data remains undisclosed due to political agendas. While working at the Green Climate Fund, I delved into various nations' National Designated Authority (NDC) reports on reducing greenhouse gas emissions. Although some countries, particularly smaller ones like island nations, demonstrate optimistic goals for emission reduction through renewable energy and electric vehicles, China, Russia, and notably North Korea, present challenges in obtaining crucial environmental data.
 
-![](nk3.png){fig-align="right" width="237"}
+![](nk3.png)
 
 Satellite data has been instrumental in acquiring insights into North Korea's forests and land use. However, much of this data remains concealed due to political constraints. During my studies of climate change law at Columbia University, I realized the extent to which environmental science intertwines with legal frameworks, emphasizing the role of political decisions in environmental matters. North Korea faces a similar scenario, heavily reliant on government decisions and propaganda, omitting itself even from the LDCs categories, complicating efforts to assist the country due to a lack of comprehensive data sources.
 
