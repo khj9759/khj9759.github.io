@@ -27,5 +27,5 @@ Produce a line graph showcasing the daily Air Quality Index (AQI) and the 5-day 
 ## Data
 1) NASA Earth Satellite Image 
 2) California Fire Parameter [Data File] Available from: https://gis.data.ca.gov/datasets/CALFIRE-Forestry::california-fire-perimeters-all-1/about
-3) Air Quality Index - https://www.airnow.gov/aqi/aqi-basics/
+3) Air Quality - https://www.epa.gov/
 
