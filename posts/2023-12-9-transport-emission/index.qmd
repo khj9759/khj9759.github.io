@@ -147,7 +147,7 @@ $\beta_3$ is the coefficients indicating the relationship between number of car 
 
 $\epsilon$ is the error term accounting for unexplained variability in the model.
 
-## Data explore 
+## Data explore
 
 -   Earth Surface Temperature: This dataset, sourced from the [EPA](https://www.epa.gov/climate-indicators/weather-climate), provides information on the surface temperature, specifically focusing on Ferrnite.
 
@@ -210,7 +210,7 @@ model <- lm(temp ~ transport_emission, data = final_subset)
 summ(model)
 ```
 
-This seems to exhibit a slightly better fit, as indicated by the higher \$R\^2\$ and adjusted \$R\^2\$ values. The Earth's temperature increases with the rise in emissions from the transportation sector. Notably, there are significant errors associated with omitted variables, such as emissions from other sectors, including industry and power plants. Additionally, the scope needs to expand beyond the USA to encompass a global perspective.
+This seems to exhibit a slightly better fit, as indicated by the higher $R^2$ and adjusted $R^2$ values. The Earth's temperature increases with the rise in emissions from the transportation sector. Notably, there are significant errors associated with omitted variables, such as emissions from other sectors, including industry and power plants. Additionally, the scope needs to expand beyond the USA to encompass a global perspective.
 
 ```{r}
 # Fit a linear regression model
@@ -258,8 +258,7 @@ $\beta_3$: This coefficient represents the estimated change in emission per car 
 ggplot(final_subset, aes(x = year, y = Real_World_CO2_g_mi)) +
   geom_jitter() +  # Scatter plot
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "blue") +  # Regression line
-  labs(x = "Year Since Regulation", y = "Emission Economy (g/mi)", title = "Regression Plot") +
-  theme_minimal()
+  labs(x = "Year Since Regulation", y = "Emission Economy (g/mi)", title = "Total CO2 emission saving")
 ```
 
 In this analysis, p-value is 9.1e-9, which is \< 0.05 can reject null hypothesis. R square is pretty low, which is 0.5.
@@ -279,7 +278,16 @@ $$\text{emission per car} = \beta_0 + \beta_2 \text{year since regulation} + \be
 
 $\beta_4$: This is interaction term implies the influence of the number of car on emission per car slightly changes as the year since regulation starts and it is defined the barometer of total CO2 emission saving.
 
-Decreasing the p-value compared to two models suggests that the interaction model between the year since regulation and the number of cars rejects the notion that their combined effect has no impact on understanding variations in CO2 emissions per car. Additionally, the higher $R^2$ and adjusted $R^2$ values signify that this interaction model better fits the data and captures a greater proportion of the variability in emissions compared to the model without the interaction term.
+```{r}
+# Create a scatter plot with a regression line
+ggplot(final_subset, aes(x = year, y = Real_World_CO2_g_mi)) +
+  geom_jitter() +  # Scatter plot
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "blue") +  # Regression line
+  labs(x = "Year Since Regulation", y = "Emission Economy (g/mi)", title = "Total CO2 emission saving") +
+  geom_abline(intercept = 690, slope = 0, linetype = "solid", color = "red")   # Red straight line
+```
+
+If there were no CAFE regulations since 1975, the red line in the plot would appear differently, assuming a steeper slope. Below the red line, it signifies the reduction in CO2 emissions as the number of cars increases. Even though the slope is 6.8e-9, it is telling that some of reduction of CO2 emission. Even though the slope is 6.8e-9, it indicates a measurable reduction in CO2 emissions. Additionally, the higher $R^2$ and adjusted $R^2$ values signify that this interaction model better fits the data and captures a greater proportion of the variability in emissions compared to the model without the interaction term.
 
 ```{r}
 ## Fit a linear model with interaction
@@ -409,8 +417,8 @@ The analysis highlights the impact of Earth's surface temperature and regulatory
 
 ### Future work
 
-Future endeavors should focus on a global perspective, assess policy effectiveness, explore technological advancements for emissions reduction, and monitor long-term trends. Continuous policy evaluation is crucial, considering initiatives like the Clean Truck Plan, while strengthening public awareness and advocacy efforts will foster sustainable practices in transportation.
+Future endeavors should prioritize finding a better model to enhance both the R square value and p-value. Continuous policy evaluation is crucial, considering initiatives like the Clean Truck Plan, while strengthening public awareness and advocacy efforts will foster sustainable practices in transportation.
 
 ### Reference
 
-NHTSA. \"Corporate Average Fuel Economy\" Accessed Dec 15, 2023. [https://www.scribbr.com/category/citing-sources/](https://www.nhtsa.gov/laws-regulations/corporate-average-fuel-economy)
+NHTSA. "Corporate Average Fuel Economy" Accessed Dec 15, 2023. [https://www.scribbr.com/category/citing-sources/](https://www.nhtsa.gov/laws-regulations/corporate-average-fuel-economy)
