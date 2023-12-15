@@ -367,6 +367,7 @@ truck <- final %>% filter(Regulatory_Class == "Truck")
 
 # Conduct a t-test to compare CO2 emissions between 'Car' and 'Truck' groups
 t_test_result <- t.test(truck$Real_World_CO2_g_mi, car$Real_World_CO2_g_mi, conf.level = 0.95)
+t_test_result
 # Uncomment the next line to display the summary statistics using tab_model
 # t_test_result %>% tab_model()
 ```

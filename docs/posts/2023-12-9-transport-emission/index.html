@@ -718,8 +718,25 @@ F-statistic: 24.56 on 3 and 43 DF,  p-value: 0.000000002043</code></pre>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct a t-test to compare CO2 emissions between 'Car' and 'Truck' groups</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(truck<span class="sc">$</span>Real_World_CO2_g_mi, car<span class="sc">$</span>Real_World_CO2_g_mi, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the next line to display the summary statistics using tab_model</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># t_test_result %&gt;% tab_model()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>t_test_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  truck$Real_World_CO2_g_mi and car$Real_World_CO2_g_mi
+t = 9.7546, df = 283.31, p-value &lt; 0.00000000000000022
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+  84.81797 127.70204
+sample estimates:
+mean of x mean of y 
+  520.268   414.008 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the next line to display the summary statistics using tab_model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># t_test_result %&gt;% tab_model()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
