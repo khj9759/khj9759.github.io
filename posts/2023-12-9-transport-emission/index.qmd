@@ -6,9 +6,8 @@ author:
     url: https://khj9759.github.io/
     orcid: 0000-0002-5300-3075
     affiliation: EDS222 - Statistics for Environmental Data Science
-    respository: https://github.com/khj9759/transport_emission
     affiliation_url: https://ucsb-meds.github.io/
-date: "2023-12-13" # Corrected date format
+date: "2023-12-15" 
 format:
   html:
     code-fold: true
@@ -17,6 +16,8 @@ categories: [R, Statistics, MEDS] # Corrected spacing in categories
 image: transport.jpeg
 output: html_document
 ---
+
+Repository: <https://github.com/khj9759/transport_emission>
 
 ## Import libraries
 
