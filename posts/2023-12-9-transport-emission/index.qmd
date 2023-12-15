@@ -1,5 +1,5 @@
 ---
-title: "Vehicles emission affects to the climate change"
+title: "Vehicles emission affects to the climate change" 
 description: "Impact of CAFE standards on reducing carbon dioxide emissions and compare truck and car models relative to these standards."
 author:
   - name: Haejin Kim
