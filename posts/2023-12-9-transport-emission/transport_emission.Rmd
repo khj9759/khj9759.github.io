@@ -14,7 +14,7 @@ format:
     code-summary: "Code"
 categories: [R, Statistics, MEDS] # Corrected spacing in categories
 image: transport.jpeg
-output: html_document
+output: html_document 
 ---
 
 ## Import libraries
