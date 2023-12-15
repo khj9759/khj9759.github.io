@@ -369,8 +369,7 @@ exp(coef(mod))
 
 This diagram clearly shows that the distribution of vehicle emissions is highly right-skewed compared to trucks. This indicates that the Environmental Protection Agency (EPA) has successfully regulated car emissions. However, there is a need for more effort to reduce emissions from trucks.
 
-```{r}
-
+```{r warning=FALSE, message=FALSE}
 gghistogram(final_vehicle_type, x = "Real_World_CO2_g_mi",
    add = "mean", rug = TRUE,
    color = "Regulatory_Class", fill = "Regulatory_Class",

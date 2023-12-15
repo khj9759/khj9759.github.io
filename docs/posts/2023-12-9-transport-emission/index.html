@@ -1019,10 +1019,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>)) <span class="sc">+</span> </span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparison of CO2 Emissions between Car and Truck Groups"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `bins = 30` by default. Pick better value with the argument
-`bins`.</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1039,17 +1035,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Regulatory_Class, "All", "Car", and "Truck", so only left "Car" and "Truck" in dataset. </span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>final_class <span class="ot">&lt;-</span> final <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Regulatory_Class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Car"</span>, <span class="st">"Truck"</span>))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate data into 'Car' and 'Truck' groups</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>car <span class="ot">&lt;-</span> final_class <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Regulatory_Class <span class="sc">==</span> <span class="st">"Car"</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>truck <span class="ot">&lt;-</span> final_class <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Regulatory_Class <span class="sc">==</span> <span class="st">"Truck"</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct a t-test to compare CO2 emissions between 'Car' and 'Truck' groups</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(truck<span class="sc">$</span>Real_World_CO2_g_mi, car<span class="sc">$</span>Real_World_CO2_g_mi, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the next line to display the summary statistics using tab_model</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>t_test_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in Regulatory_Class, "All", "Car", and "Truck", so only left "Car" and "Truck" in dataset. </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>final_class <span class="ot">&lt;-</span> final <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Regulatory_Class <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Car"</span>, <span class="st">"Truck"</span>))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate data into 'Car' and 'Truck' groups</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>car <span class="ot">&lt;-</span> final_class <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Regulatory_Class <span class="sc">==</span> <span class="st">"Car"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>truck <span class="ot">&lt;-</span> final_class <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Regulatory_Class <span class="sc">==</span> <span class="st">"Truck"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct a t-test to compare CO2 emissions between 'Car' and 'Truck' groups</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(truck<span class="sc">$</span>Real_World_CO2_g_mi, car<span class="sc">$</span>Real_World_CO2_g_mi, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment the next line to display the summary statistics using tab_model</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>t_test_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
