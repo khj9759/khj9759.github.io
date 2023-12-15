@@ -410,3 +410,7 @@ The analysis highlights the impact of Earth's surface temperature and regulatory
 ### Future work
 
 Future endeavors should focus on a global perspective, assess policy effectiveness, explore technological advancements for emissions reduction, and monitor long-term trends. Continuous policy evaluation is crucial, considering initiatives like the Clean Truck Plan, while strengthening public awareness and advocacy efforts will foster sustainable practices in transportation.
+
+### Reference
+
+NHTSA. \"Corporate Average Fuel Economy\" Accessed Dec 15, 2023. [https://www.scribbr.com/category/citing-sources/](https://www.nhtsa.gov/laws-regulations/corporate-average-fuel-economy).
