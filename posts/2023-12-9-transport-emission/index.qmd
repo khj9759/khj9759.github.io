@@ -417,7 +417,7 @@ The analysis highlights the impact of Earth's surface temperature and regulatory
 
 ### Future work
 
-Future endeavors should prioritize finding a better model to enhance both the R square value and p-value. Continuous policy evaluation is crucial, considering initiatives like the Clean Truck Plan, while strengthening public awareness and advocacy efforts will foster sustainable practices in transportation.
+Future efforts should prioritize the development of an improved model to enhance both the R-squared value and p-value. Additionally, addressing omitted variable bias is essential for refining this modeling approach. Continuous policy evaluation is crucial, especially in light of initiatives like the Clean Truck Plan. Strengthening public awareness and advocacy efforts will further promote sustainable practices in transportation.
 
 ### Reference
 
