@@ -147,7 +147,7 @@ $\beta_3$ is the coefficients indicating the relationship between number of car 
 
 $\epsilon$ is the error term accounting for unexplained variability in the model.
 
-## Data explore
+## Data explore 
 
 -   Earth Surface Temperature: This dataset, sourced from the [EPA](https://www.epa.gov/climate-indicators/weather-climate), provides information on the surface temperature, specifically focusing on Ferrnite.
 
