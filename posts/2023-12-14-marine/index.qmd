@@ -5,7 +5,7 @@ author:
   name: Haejin Kim
   url: https://khj9759.github.io/
   orcid: 0000-0002-5300-3075
-  affiliation: EDS223 - Geospatial
+  affiliation: EDS223 - Geospatial Analysis & Remote Sensing
   affiliation-url: https://ucsb-meds.github.io/
 date: 2023-12-14
 categories: [Geospatial, R, MEDS] # self-defined categories
