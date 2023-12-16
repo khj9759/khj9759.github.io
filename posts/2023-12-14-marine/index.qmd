@@ -72,7 +72,7 @@ library(tmap)
 library(kableExtra)
 
 rm(list = ls())
-here::i_am("marine_farming.Rmd")
+here::i_am("index.qmd")
 ```
 
 ### Clean data
