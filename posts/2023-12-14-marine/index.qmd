@@ -20,6 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 getwd()
 ```
 
+Repository: <https://github.com/khj9759/marine_farming>
+
 ## Background
 
 Marine farming could be an important source of sustainable protein worldwide, better than land-based meat production with ([Gentry et al)](https://www.nature.com/articles/s41559-017-0257-9) globally mapped potential marine farming areas, considering factors like ship traffic and oxygen levels.
