@@ -15,6 +15,7 @@ format:
 categories: [R, Visualize, MEDS] # Corrected spacing in categories
 image: car.jpeg
 output: html_document
+draft:False
 ---
 
 ## Dose vehicle manufactuer company made an effort to reduce the greenhouse gas emissions? 
