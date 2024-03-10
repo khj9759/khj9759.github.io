@@ -1,0 +1,361 @@
+---
+title: "Impact of Vehicle Types on GHG Emissions" 
+description: "Do vehicle manufacturers make efforts to reduce greenhouse gas emissions"
+author:
+  - name: Haejin Kim
+    url: https://khj9759.github.io/
+    orcid: 0000-0002-5300-3075
+    affiliation: EDS240 - Data Visualization & Communication
+    affiliation_url: https://ucsb-meds.github.io/
+date: "2024-03-09" 
+format:
+  html:
+    code-fold: true
+    code-summary: "Code"
+categories: [R, Visualize, MEDS] # Corrected spacing in categories
+image: car.jpeg
+output: html_document
+---
+
+## Dose vehicle manufactuer company made an effort to reduce the greenhouse gas emissions?
+
+In my dataset, I have included data pertaining to manufacturing companies, vehicle types, regulatory classes, real-world CO2 emissions, production volumes, production volume percentages, and engine types per vehicle segment since 1975. Specifically, vehicle types are categorized as either cars or trucks, with regulatory classes defining specific car types such as sedan/wagon, car SUV, truck SUV, pickup, and minivan. Thus, sedan/wagon and car SUV fall under the car category, while the remaining types are classified as trucks. Real-world CO2 emissions indicate the energy efficiency of cars in reducing oil consumption and greenhouse gas emissions. Production volume units start at 1000 (units), and engine types are defined to distinguish between electric and gasoline cars.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
+
+# library ------
+library(tidyverse)
+library(dplyr)
+library(ggplot2) # use the plot 
+library(patchwork) # attached two plot
+library(viridis) # color palatte
+library(unikn)  # load unikn package
+library(ggplot2)
+library(ggimage) # add image 
+
+## data cleaning process -------
+# data from EPA Car emission 
+vehicle <- read_csv("data/export_data_by_manufactuer.csv") %>% 
+  janitor::clean_names() # clean the name neatly 
+
+# change specific data 
+vehicle$model_year<- gsub("Prelim. 2022", "2022", vehicle$model_year)
+
+# Specify columns to convert to numeric
+numeric_cols <- c("model_year", "production_000", "production_share", "x2_cycle_mpg", "real_world_mpg", "real_world_mpg_city", "real_world_mpg_hwy", "real_world_co2_g_mi", "real_world_co2_city_g_mi", "real_world_co2_hwy_g_mi", "weight_lbs", "footprint_sq_ft", "engine_displacement", "horsepower_hp", "acceleration_0_60_time_in_seconds", "hp_engine_displacement", "hp_weight_lbs", "ton_mpg_real_world", "drivetrain_front", "drivetrain_4wd", "drivetrain_rear", "transmission_manual", "transmission_automatic", "transmission_lockup", "transmission_cvt_hybrid", "transmission_other", "fuel_delivery_carbureted", "fuel_delivery_gasoline_direct_injection_gdi", "fuel_delivery_port_fuel_injection", "fuel_delivery_throttle_body_injection", "fuel_delivery_other", "powertrain_diesel", "powertrain_electric_vehicle_ev", "powertrain_plug_in_hybrid_electric_vehicle_phev", "powertrain_fuel_cell_vehicle_fcv", "powertrain_other_incl_cng", "powertrain_gasoline_hybrid", "powertrain_gasoline", "turbocharged_engine", "stop_start", "cylinder_deactivation", "multivalve_engine", "variable_valve_timing", "average_number_of_gears", "transmission_cvt_non_hybrid", "x4_or_fewer_gears", "x5_gears", "x6_gears", "x7_gears", "x8_gears", "x9_or_more_gears")
+
+# Convert specified columns character to numeric
+vehicle[, numeric_cols] <- lapply(vehicle[, numeric_cols], as.numeric)
+
+```
+
+First Visualization: In the first visualization, a bar graph is employed to illustrate production volume changes, facilitating easy comparison between years. Titles, captions, and subtitles are included to provide context and guide viewers through the visualization, effectively communicating the main message of significant EV production increase over 10 years. A minimal theme is adopted to maintain focus on the data, with adjustments made to remove unnecessary background elements and declutter the graph. While a single color is chosen for bars, experimenting with palettes is suggested to enhance appeal and accessibility. Typography adjustments ensure clarity and readability, with the title made bold for emphasis. Grid lines, borders, and unnecessary axis elements are removed to declutter the graph and focus attention on the data. Car symbols are added to contextualize the data and reinforce the subject matter of EV production. The title and subtitle effectively center the primary message around significant EV production increase. While accessibility concerns like colorblind-friendly palettes and alt text for images aren't explicitly addressed, their importance for inclusivity is acknowledged. The focus on electric vehicle production reflects a DEI perspective by considering broader societal impact.
+
+Additionally, it's important to note that the simplicity of the data and the straightforward comparison between years in the visualization may mitigate the necessity for intricate color palettes. Likewise, while the visualization explores electric vehicle production, which inherently carries societal implications, deeper integration of DEI perspectives could enhance its context and implications further.
+
+```{r}
+
+# -------------------
+#      Option 1-1
+# -------------------
+
+# sorted electric vehicle 
+ev_production <- vehicle %>% 
+  filter(model_year %in% c(seq(2011, 2021)), vehicle_type == "All", manufacturer == "All") %>%
+  mutate(ev = (powertrain_electric_vehicle_ev + powertrain_plug_in_hybrid_electric_vehicle_phev) * production_000)
+
+max_counts <- ev_production %>%
+  group_by(model_year) %>%
+  summarize(max_count = max(ev))
+
+
+# plot the graph 
+ggplot(ev_production, aes(x = factor(model_year), y = ev)) +
+  geom_bar(stat = "identity", position = "dodge", fill = "#BA707C") +
+  geom_text(aes(label = round(ev)), vjust = -0.5, size = 3, color = "black") +  # Add rounded value labels
+  labs(x = "Model Year", y = "Count") +
+  plot_annotation(
+    title = "Electric Vehicle Production Volume Change (2011 - 2021) in USA",
+    caption = 'resource: EPA',
+    subtitle = glue::glue("Shows a significant increase in EV production over 10 years, unit (K)"),
+    theme = theme(plot.title = element_text(size = 14, face = "bold"))
+  ) +
+  theme_minimal() +
+  theme(strip.placement = "outside",  # Move facet labels outside
+        strip.background = element_blank(),  # Remove background
+        panel.background = element_blank(),  # Remove panel background
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        panel.border = element_blank(),      # Remove panel border
+        axis.title.y.left = element_blank(), 
+        axis.text.y.left = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.line = element_line(color = "black"),
+        legend.position = "none") +
+  geom_image(aes(x = 3, y = 200, image = "car2.png"), size = 0.1) +
+  geom_image(aes(x = 8, y = 450, image = "car2.png"), size = 0.1) +
+  geom_image(aes(x = 11, y = 700, image = "car2.png"), size = 0.1) + 
+  # Add a line segment starting from the image to the right
+  geom_segment(aes(x = 1, y = 20, xend = 2.9, yend = 200), color = "#2AB823", linetype = "dashed", size = 0.1) + 
+  geom_segment(aes(x = 3.1, y = 200, xend = 7.9, yend = 450), color = "#2AB823", linetype = "dashed", size = 0.1) +
+  geom_segment(aes(x = 8.1, y = 450, xend = 10.9, yend = 700), color = "#2AB823", linetype = "dashed", size = 0.1) 
+```
+
+Second Visualization: In the second plot, tailored for a technical report, the statistical analysis centers on the energy efficiency improvements of various vehicle types. The vehicles are categorized into five distinct types: sedan/wagon, car SUV, truck SUV, pickup truck, and minivan/van, with distinctions based on regulatory definitions. Notably, all five types showcase record high fuel economy and record low CO2 emissions. The trend away from sedan/wagons towards lower fuel economy vehicles has been observed, partially offsetting some fleetwide benefits.
+
+Proper text elements and non-gridded themes are applied, enhancing the graph's suitability for inclusion in technical documentation. Redish hues are employed for cars, while greenish tones represent trucks, aligning colors effectively with vehicle types. Typography is made bold for emphasis, ensuring clarity and highlighting key insights. The clear graphic form highlights volume changes, with distinctions between car and truck SUVs indicated by blue dashed lines.
+
+Labels specifically for car SUVs, pickups, and minivans/vans are included, providing contextualization and centering the primary message beneath the title. Accessibility considerations are integrated with distinct colors for easy differentiation between vehicle types, enhancing inclusivity and ease of interpretation. The graph delves into how market shifts influence fleetwide benefits, offering valuable insights into the dynamics of energy efficiency improvements across different vehicle categories.
+
+```{r}
+
+# ------------------------------
+#            Option 1-2
+# ------------------------------  
+# bring necessary data All car brand(manufacturer) 
+production <- vehicle %>% 
+  group_by(manufacturer) %>%
+  filter(manufacturer == "All") %>%
+  filter(vehicle_type %in% c("Sedan/Wagon", "Car SUV", "Truck SUV", "Minivan/Van", "Pickup"))
+
+
+# Normalize the production_share variable to make the sum 100%
+production <- production %>%
+  mutate(normalized_production_share = production_share * 100)
+
+## manually add the data ---
+# find the NA value manullay -- first
+#which(is.na(production$normalized_production_share))
+
+# manually add the data ---
+
+production$production_share[48] <- 0.114
+production$production_share[96] <- 0.022
+production$production_share[144] <- 0.161
+production$production_share[192] <- 0.257
+production$production_share[240] <- 0.447
+
+# make it reorder of vehicle_type
+production$vehicle_type <- factor(production$vehicle_type, 
+                                  levels = c("Sedan/Wagon", "Car SUV", "Truck SUV", "Minivan/Van", "Pickup"))
+
+# color scale 
+color_bar <- c("#BA707C", "#BA15BA", "#BDC667","#2AB823","#A9D337")
+
+last_truck <- production %>%
+  filter(regulatory_class == "Truck") %>%
+  count(model_year, wt = production_share * 100) %>%
+  slice(n())
+
+# portion of 5 different vehicle types  
+vehicle_type_100 <- ggplot(production, aes(x = model_year, y = normalized_production_share, fill = vehicle_type)) +
+  geom_area() + # cover area all over the graph 
+  geom_line(data = production %>% 
+            filter(regulatory_class == "Truck") %>% 
+            count(model_year, wt = production_share * 100),  
+          aes(x = model_year, y = n), inherit.aes = FALSE,  
+          color = "blue", size = 0.5, linetype = "dashed") +
+  scale_y_continuous(expand = expansion(add = c(1, 1))) +
+  annotate(geom = "text", x = 2000, y = 75, label = "Sedan/Wagon", size = 2.5,color = "white") +
+  annotate(geom = "text", x = 1989, y = 55, label = "Car SUV", size = 2.5, color = "white") +
+  annotate(geom = "curve", x = 1996, xend = 1992, y = 42.5, yend = 55,
+           arrow = arrow(length = unit(0.2, "cm"), ends = "first"), size = 0.07, color = "white") +
+  annotate(geom = "text", x = 2005, y = 32.5, label = "Truck SUV", size = 2.5) +
+  annotate(geom = "text", x = 1995, y = 22.5, label = "Minivan/Van", size = 2.5) +
+  annotate(geom = "text", x = 1991, y = 7.5, label = "Pickup", size = 2.5) +
+  labs(title = "Normalized Production Share Over Time",
+       x = "Model Year",
+       y = "Normalized Production Share (%)",
+       linetype = "Vehicle Type") +
+  scale_fill_manual(values = color_bar) +
+  theme(strip.background = element_blank(),  # Remove background
+        panel.background = element_blank(),  # Remove panel background
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        panel.border = element_blank(),      # Remove panel border
+        axis.line = element_line(color = "black"),
+        legend.position = "none") +
+  annotate("text", x = 2021, y = 75, label = "Car", color = "blue", size = 3, fontface = "bold", angle = 90, vjust = 0.5) +
+  annotate("text", x = 2021, y = 25, label = "Truck", color = "blue", size = 3, fontface = "bold", angle = 90, vjust = 0.5)
+
+# -----------
+# second graph
+# ------------
+
+# prep1: sort the "all" vehicle type file using regulatory_class & model_year
+prep1 <- production %>%
+  group_by(regulatory_class, model_year)
+
+# prep2: for the label number of CO2 emission by car/truck
+label_data <- prep1 %>%
+  group_by(regulatory_class) %>%
+  dplyr::summarize(first_point = first(real_world_co2_g_mi),
+                   last_point = last(real_world_co2_g_mi),
+                   first_year = first(model_year),
+                   last_year = last(model_year))
+
+# Define equation and statistics for truck
+model_t <- lm(real_world_co2_g_mi ~ model_year, data = production %>% filter(regulatory_class == "Truck"))
+rsquared_t <- summary(model_t)$r.squared
+slope_t <- coef(model_t)[2] 
+
+# Define equation and statistics for car
+model_c <- lm(real_world_co2_g_mi ~ model_year, data = production %>% filter(regulatory_class == "Car"))
+rsquared_c <- summary(model_c)$r.squared
+slope_c <- coef(model_c)[2]
+
+# Display R² value and slope for Truck
+emission_vehicle <- ggplot(prep1, aes(x = model_year, y = real_world_co2_g_mi)) +
+  geom_point(size = 0.2) +
+  facet_wrap(~ regulatory_class, scales = "free_y", ncol = 1) +
+  labs(x = "Model Year", y = "Real World CO2 (g/mi)", title = "Energy Efficiency of Vehicle Type") +
+  geom_smooth(aes(color = regulatory_class),  # Color by regulatory class
+              linetype = "solid",              # Set line type to solid
+              size = 1) +                      # Set line size
+  scale_color_manual(values = c("Car" = "#A22F2F", "Truck" = "#77966D")) +  # Set custom colors
+  theme(strip.placement = "outside",  # Move facet labels outside
+        strip.background = element_blank(),  # Remove background
+        panel.background = element_blank(),  # Remove panel background
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        panel.border = element_blank(),      # Remove panel border
+        axis.line = element_line(color = "black"),
+        legend.position = "none") +
+  geom_text(data = label_data %>% filter(regulatory_class == "Truck"), 
+            aes(label = paste("Truck R² =", round(rsquared_t, 3), 
+                              "\nTruck Slope =", round(slope_t, 3)), 
+                x = last_year - 5, y = last_point + 400, hjust = .5, vjust = .5), 
+            size = 3, color = "black") +
+  geom_text(data = label_data %>% filter(regulatory_class == "Car"), 
+            aes(label = paste("Car R² =", round(rsquared_c, 3), 
+                              "\nCar Slope =", round(slope_c, 3)), 
+                x = last_year - 5, y = last_point + 400, hjust = .5, vjust = .5), 
+            size = 3, color = "black") +
+  geom_text(data = label_data, aes(label = round(first_point), x = first_year, y = first_point), vjust = -0.5, hjust = -0.2, size = 3) +
+  geom_text(data = label_data, aes(label = round(last_point), x = last_year -1, y = last_point), vjust = -3.5, hjust = -0.2, size = 3) 
+
+# display two plot at once
+
+vehicle_type_100 + emission_vehicle +
+  plot_annotation(
+    title = "Overall Vehicle Trend of the Impact of Greenhouse Gas Emission",
+    caption = 'Resource: EPA',
+    subtitle = "The left graph shows the production share of each segment, and the right graph shows the changes in car and truck energy efficiency. \nBased on the right graph, cars exhibit a significant improvement in energy efficiency compared to trucks.",
+    theme = theme(plot.title = element_text(face = "bold", size = 14),
+                  plot.subtitle = element_text(size = 12))
+  )
+```
+
+Third Visualization: The third plot targets the general public, focusing on vehicle volume for well-known brands like Toyota, Mercedes, BMW, and Mazda. The graph emphasizes declining production volumes for car brands in the USA, suggesting a preference for trucks over cars. The aim is to convey that despite efforts to reduce GHG emissions, market preferences drive production towards higher-emission vehicles. The graph utilizes a segment format, with text providing additional information. Themes remain unaltered, as grid lines aid in number comparison. Typography is adjusted to match the first plot's manufacturing brand. Contextualizing data is deemed unnecessary due to brand recognition. The primary message is centered in the subtitle, and accessibility is enhanced by highlighting only specific brands. The data reflects a DEI perspective, ensuring public understanding of the graph's intention.
+
+```{r}
+
+# ------------------------------
+#             Option 1-3
+# ------------------------------  
+
+## Filter the data from oringial data excluding "all" due to duplication of manufacturing data
+## note: all = adding all manufacturer data 
+
+
+# car filter data ----
+car_volume <- vehicle %>%
+  filter(regulatory_class != "All", 
+         manufacturer != "All", 
+         vehicle_type == "All Car",
+         model_year %in% c('1997', '2021'), !is.na(production_000))
+
+# truck filter data ---
+truck_volume <- vehicle %>%
+  filter(regulatory_class != "All", 
+         manufacturer != "All", 
+         vehicle_type == "All Truck",
+         model_year %in% c('1997', '2021'), !is.na(production_000))
+
+# tesla is missing data in 1997, so adding manually 
+new_row <- data.frame(
+  model_year = 1997,
+  production_000 = 0,
+  manufacturer = "Tesla"
+)
+
+# tesla, hyundai, bmw, subaru, and mercedes are missing data in 1997, so adding manually 
+new_row_t <- data.frame(
+  model_year = c(1997, 1997,1997,1997,1997),
+  production_000 = c(0, 0, 0, 0, 0),
+  manufacturer = c("Tesla", "Hyundai", "BMW", "Subaru", "Mercedes")
+)
+
+# car data in 1997..adding manually: tesla 
+c1997 <- car_volume %>%
+  select(model_year, production_000, manufacturer) %>%
+  filter(model_year == 1997 & !is.na(production_000))  %>% bind_rows(new_row) %>% 
+   mutate_if(is.ordered, .funs = factor, ordered = F) 
+
+# car data in 2021 
+c2021 <- car_volume %>%
+  select(model_year, production_000, manufacturer) %>%
+  filter(model_year == 2021 & !is.na(production_000)) %>%
+   mutate_if(is.ordered, .funs = factor, ordered = F) 
+
+# truck data in 1997.. adding manually:  tesla, hyundai, bmw, subaru, and mercedes
+t1997 <- truck_volume %>%
+  select(model_year, production_000, manufacturer) %>%
+  filter(model_year == 1997 & !is.na(production_000))  %>% bind_rows(new_row_t) %>% 
+   mutate_if(is.ordered, .funs = factor, ordered = F) 
+
+# truck data in 2021 
+t2021 <- truck_volume %>%
+  select(model_year, production_000, manufacturer) %>%
+  filter(model_year == 2021 & !is.na(production_000)) %>%
+   mutate_if(is.ordered, .funs = factor, ordered = F) 
+
+# car data df 
+car_df <- data.frame(manufacturer = c1997$manufacturer,
+                    start = c1997$production_000,
+                    end = c2021$production_000) 
+# add new column 
+car_df$usa_brand <- ifelse(car_df$manufacturer %in% c("Toyota", "Mercedes", "Mazda", "BMW"), 1, 0)
+
+# car plot for geom_segment
+car_plt <- ggplot(car_df, aes(x = start, xend = end, 
+                   y = fct_reorder(manufacturer, manufacturer), yend = manufacturer)) + 
+  geom_segment(aes(position = "stack", color = factor(usa_brand)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
+  geom_point(aes(x = start, y = manufacturer), color = "#CCD437", size = 1.5) +
+  scale_color_manual(values = c("0" = "grey", "1" = "black"),
+                     labels = c("Start", "End", "Segment")) +
+  labs(x = "Production Volume (K)") +  # Set a general title
+  theme_minimal() +
+  theme(axis.title.y = element_blank(), 
+        plot.title = element_text(size = 14, family = "sen", face = "plain"))  # Remove background
+
+# truck data df 
+truck_df <- data.frame(manufacturer = t1997$manufacturer,
+                    start = t1997$production_000,
+                    end = t2021$production_000) 
+
+# sorted only usa brand 
+truck_df$usa_brand <- ifelse(truck_df$manufacturer %in% c("Toyota", "Mercedes", "Mazda", "BMW"), 1, 0)
+
+# truck plot for geom_segment
+truck_plt <- ggplot(truck_df , aes(x = start, xend = end, 
+                   y = fct_reorder(manufacturer, manufacturer), yend = manufacturer)) + 
+  geom_segment(aes(position = "stack", color = factor(usa_brand)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
+  geom_point(aes(x = start, y = manufacturer), color = "#CCD437", size = 1.5) +
+  scale_color_manual(values = c("0" = "grey", "1" = "black"),
+                     labels = c("Start", "End", "Segment")) +
+  labs(x = "Production Volume (K)", title = NULL) +  # Remove title
+  theme_minimal() +
+  theme(axis.title.y = element_blank(),
+        plot.title = element_blank())  # Remove title
+
+# Combine plots with shared title
+car_plt + truck_plt + 
+  plot_annotation(
+    title = "Volume Change by Vehicle Types (1997 - 2021) in USA",
+    caption = 'resource: EPA',
+    subtitle = "This graph primarily represents the car brands in the United States. It illustrates the significant fluctuation in production volumes among \nkey car brands, including Toyota, Mercedes, Mazda,and BMW.",
+    theme = theme(plot.title = element_text(size = 14, face = "bold"))
+  )
+```
