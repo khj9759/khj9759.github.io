@@ -39,10 +39,13 @@ build three separative visualizations:
 
 3\) Presentation: Which Vehicle Types Have Car Manufacturer Brands Increased Their Production Volume?
 
-### Set up and Data Wrangling
+### Set up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
+```
 
 ```{r}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
 
 # library ------
 library(tidyverse)
@@ -51,9 +54,13 @@ library(ggplot2) # use the plot
 library(patchwork) # attached two plot
 library(viridis) # color palatte
 library(unikn)  # load unikn package
-library(ggplot2)
 library(ggimage) # add image 
 
+```
+
+### Data Wrangling
+
+```{r}
 ## data cleaning process -------
 # data from EPA Car emission 
 vehicle <- read_csv("data/export_data_by_manufactuer.csv") %>% 
