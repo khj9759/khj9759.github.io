@@ -18,7 +18,7 @@ output: html_document
 draft: true
 ---
 
-## Dose vehicle manufactuer company made an effort to reduce the greenhouse gas emissions?
+## Dose vehicle manufactuer company made an effort to reduce the greenhouse gas emissions? 
 
 In my dataset, I have included data pertaining to manufacturing companies, vehicle types, regulatory classes, real-world CO2 emissions, production volumes, production volume percentages, and engine types per vehicle segment since 1975. Specifically, vehicle types are categorized as either cars or trucks, with regulatory classes defining specific car types such as sedan/wagon, car SUV, truck SUV, pickup, and minivan. Thus, sedan/wagon and car SUV fall under the car category, while the remaining types are classified as trucks. Real-world CO2 emissions indicate the energy efficiency of cars in reducing oil consumption and greenhouse gas emissions. Production volume units start at 1000 (units), and engine types are defined to distinguish between electric and gasoline cars.
 
