@@ -1,6 +1,6 @@
 ---
 title: "Impact of Vehicle Types on GHG Emissions" 
-description: "Do vehicle manufacturers make efforts to reduce greenhouse gas emissions"
+description: "Do vehicle manufacturers make efforts to reduce greenhouse gas emissions?"
 author:
   - name: Haejin Kim
     url: https://khj9759.github.io/
@@ -15,7 +15,7 @@ format:
 categories: [R, Visualize, MEDS] # Corrected spacing in categories
 image: car.jpeg
 output: html_document
-draft:False
+draft: False
 ---
 
 ## Dose vehicle manufactuer company made an effort to reduce the greenhouse gas emissions? 
