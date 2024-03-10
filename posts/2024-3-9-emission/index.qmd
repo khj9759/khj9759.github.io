@@ -13,9 +13,8 @@ format:
     code-fold: true
     code-summary: "Code"
 categories: [R, Visualize, MEDS] # Corrected spacing in categories
-#image: car.jpeg
+image: car.jpeg
 output: html_document
-draft: true
 ---
 
 ## Dose vehicle manufactuer company made an effort to reduce the greenhouse gas emissions? 
