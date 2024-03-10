@@ -23,11 +23,15 @@ This blog post aims to explore the impact of vehicle emissions on greenhouse gas
 
 ### About the data
 
-In this data, I have included data pertaining to manufacturing companies, vehicle types, regulatory classes, real-world CO2 emissions, production volumes, production volume percentages, and engine types per vehicle segment since 1975. Specifically, vehicle types are categorized as either cars or trucks, with regulatory classes defining specific car types such as sedan/wagon, car SUV, truck SUV, pickup, and minivan. Thus, sedan/wagon and car SUV fall under the car category, while the remaining types are classified as trucks. Real-world CO2 emissions indicate the energy efficiency of cars in reducing oil consumption and greenhouse gas emissions. Production volume units start at 1000 (units), and engine types are defined to distinguish between electric and gasoline cars.
+In this data, I have included data pertaining to manufacturing companies, vehicle types, regulatory classes, real-world CO2 emissions, production volumes, production volume percentages, and engine types per vehicle segment since 1975. Real-world CO2 emissions indicate the energy efficiency of cars in reducing oil consumption and greenhouse gas emissions. Production volume units start at 1000 (units), and engine types are defined to distinguish between electric and gasoline cars.
+
+The Trends database covers all new light-duty vehicles in the United States. According to the CAFE and GHG regulations, these vehicles are divided into two regulatory classes: passenger cars and light trucks. Each class has separate GHG and fuel economy standards. Pickup trucks, vans, and minivans are categorized as light trucks under NHTSA's regulatory definitions, while sedans, coupes, and wagons are generally classified as cars. Sport utility vehicles (SUVs) can fall into either category, depending on specific vehicle attributes. Please refer to the diagram below for Regulatory Classes and Vehicle Types used in this report.
+
+![](reg.png){width="306"}
 
 ### Questions
 
-build three separative visualizatons:
+build three separative visualizations:
 
 1\) General Audience: How Have Car Manufacturers Increased Electric Vehicle Production?
 
@@ -37,7 +41,7 @@ build three separative visualizatons:
 
 ### Set up and Data Wrangling
 
-```{r setup, include=FALSE}
+```{r}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
 
 # library ------
@@ -66,7 +70,8 @@ vehicle[, numeric_cols] <- lapply(vehicle[, numeric_cols], as.numeric)
 
 ```
 
-### Data Visuzlization 
+### Data Visuzlization
+
 #### First Visualization:
 
 In the first visualization, a bar graph is employed to illustrate production volume changes, facilitating easy comparison between years. Titles, captions, and subtitles are included to provide context and guide viewers through the visualization, effectively communicating the main message of significant EV production increase over 10 years. A minimal theme is adopted to maintain focus on the data, with adjustments made to remove unnecessary background elements and declutter the graph. While a single color is chosen for bars, experimenting with palettes is suggested to enhance appeal and accessibility. Typography adjustments ensure clarity and readability, with the title made bold for emphasis. Grid lines, borders, and unnecessary axis elements are removed to declutter the graph and focus attention on the data. Car symbols are added to contextualize the data and reinforce the subject matter of EV production. The title and subtitle effectively center the primary message around significant EV production increase. While accessibility concerns like colorblind-friendly palettes and alt text for images aren't explicitly addressed, their importance for inclusivity is acknowledged. The focus on electric vehicle production reflects a DEI perspective by considering broader societal impact.
