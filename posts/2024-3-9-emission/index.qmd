@@ -7,7 +7,7 @@ author:
     orcid: 0000-0002-5300-3075
     affiliation: EDS240 - Data Visualization & Communication
     affiliation_url: https://ucsb-meds.github.io/
-date: "2024-03-09" 
+date: "2024-03-19" 
 format:
   html:
     code-fold: true
@@ -19,7 +19,7 @@ output: html_document
 
 ### Introduction
 
-This blog post aims to explore the impact of vehicle emissions on greenhouse gas emissions through visualizations that address three distinct questions using the same dataset sourced from the [EPA](https://www.epa.gov/regulations-emissions-vehicles-and-engines). Throughout this exploration, we will consider 10 key design elements: graphic forms, text, themes, colors, typography, general design, data contextualization, primary message, accessibility, and diversity, equity, and inclusion (DEI).
+This blog post aims to explore the impact of vehicle emissions on greenhouse gas emissions through visualizations that address three distinct questions using the same dataset sourced from the Environmental Protection Agency ([EPA](https://www.epa.gov/regulations-emissions-vehicles-and-engines)). Throughout this exploration, we will consider 10 key design elements: graphic forms, text, themes, colors, typography, general design, data contextualization, primary message, accessibility, and diversity, equity, and inclusion (DEI).
 
 ### About the data
 
@@ -31,7 +31,7 @@ The Trends database covers all new light-duty vehicles in the United States. Acc
 
 ### Questions
 
-build three separative visualizations:
+build three separative visualizations based on the main question:
 
 1\) General Audience: How Have Car Manufacturers Increased Electric Vehicle Production?
 
@@ -39,14 +39,13 @@ build three separative visualizations:
 
 3\) Presentation: Which Vehicle Types Have Car Manufacturer Brands Increased Their Production Volume?
 
-### Set up
+### Set up and Data Wrangling
 
-```{r setup, include=FALSE}
+```{r}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
 ```
 
 ```{r}
-
 # library ------
 library(tidyverse)
 library(dplyr)
@@ -54,13 +53,11 @@ library(ggplot2) # use the plot
 library(patchwork) # attached two plot
 library(viridis) # color palatte
 library(unikn)  # load unikn package
+library(ggplot2)
 library(ggimage) # add image 
+library(gridExtra)
+library(grid)
 
-```
-
-### Data Wrangling
-
-```{r}
 ## data cleaning process -------
 # data from EPA Car emission 
 vehicle <- read_csv("data/export_data_by_manufactuer.csv") %>% 
@@ -104,12 +101,12 @@ max_counts <- ev_production %>%
 # plot the graph 
 ggplot(ev_production, aes(x = factor(model_year), y = ev)) +
   geom_bar(stat = "identity", position = "dodge", fill = "#BA707C") +
-  geom_text(aes(label = round(ev)), vjust = -0.5, size = 3, color = "black") +  # Add rounded value labels
+  geom_text(aes(label = paste0(round(ev),"k")), vjust = -0.5, size = 3, color = "black") +  # Add rounded value labels
   labs(x = "Model Year", y = "Count") +
   plot_annotation(
     title = "Electric Vehicle Production Volume Change (2011 - 2021) in USA",
     caption = 'resource: EPA',
-    subtitle = glue::glue("Shows a significant increase in EV production over 10 years, unit (K)"),
+    subtitle = glue::glue("The USA has seen a steady increase in EV production over the last 10 years, with 60 times more \nEVs produced in 2021 as compared to 2011."),
     theme = theme(plot.title = element_text(size = 14, face = "bold"))
   ) +
   theme_minimal() +
@@ -130,7 +127,8 @@ ggplot(ev_production, aes(x = factor(model_year), y = ev)) +
   # Add a line segment starting from the image to the right
   geom_segment(aes(x = 1, y = 20, xend = 2.9, yend = 200), color = "#2AB823", linetype = "dashed", size = 0.1) + 
   geom_segment(aes(x = 3.1, y = 200, xend = 7.9, yend = 450), color = "#2AB823", linetype = "dashed", size = 0.1) +
-  geom_segment(aes(x = 8.1, y = 450, xend = 10.9, yend = 700), color = "#2AB823", linetype = "dashed", size = 0.1) 
+  geom_segment(aes(x = 8.1, y = 450, xend = 10.9, yend = 700), color = "#2AB823", linetype = "dashed", size = 0.1) +
+  coord_cartesian(clip = "off") # Turn off clipping
 ```
 
 #### Second Visualization:
@@ -174,7 +172,7 @@ production$vehicle_type <- factor(production$vehicle_type,
                                   levels = c("Sedan/Wagon", "Car SUV", "Truck SUV", "Minivan/Van", "Pickup"))
 
 # color scale 
-color_bar <- c("#BA707C", "#BA15BA", "#BDC667","#2AB823","#A9D337")
+color_bar <- c("#F17878", "#F1C2C2", "#B1B5FF","#ADA3EF","#681CD1")
 
 last_truck <- production %>%
   filter(regulatory_class == "Truck") %>%
@@ -188,29 +186,35 @@ vehicle_type_100 <- ggplot(production, aes(x = model_year, y = normalized_produc
             filter(regulatory_class == "Truck") %>% 
             count(model_year, wt = production_share * 100),  
           aes(x = model_year, y = n), inherit.aes = FALSE,  
-          color = "blue", size = 0.5, linetype = "dashed") +
+          color = "black", size = 0.5, linetype = "dashed") +
   scale_y_continuous(expand = expansion(add = c(1, 1))) +
   annotate(geom = "text", x = 2000, y = 75, label = "Sedan/Wagon", size = 2.5,color = "white") +
   annotate(geom = "text", x = 1989, y = 55, label = "Car SUV", size = 2.5, color = "white") +
   annotate(geom = "curve", x = 1996, xend = 1992, y = 42.5, yend = 55,
            arrow = arrow(length = unit(0.2, "cm"), ends = "first"), size = 0.07, color = "white") +
-  annotate(geom = "text", x = 2005, y = 32.5, label = "Truck SUV", size = 2.5) +
+  annotate(geom = "text", x = 2005, y = 32.3, label = "Truck SUV", size = 2.5) +
   annotate(geom = "text", x = 1995, y = 22.5, label = "Minivan/Van", size = 2.5) +
-  annotate(geom = "text", x = 1991, y = 7.5, label = "Pickup", size = 2.5) +
+  annotate(geom = "text", x = 1991, y = 7.5, label = "Pickup", size = 2.5, color = "white") +
   labs(title = "Normalized Production Share Over Time",
        x = "Model Year",
        y = "Normalized Production Share (%)",
        linetype = "Vehicle Type") +
   scale_fill_manual(values = color_bar) +
-  theme(strip.background = element_blank(),  # Remove background
+  theme(plot.title = element_text(size = 11), # change title size 
+        strip.background = element_blank(),  # Remove background
         panel.background = element_blank(),  # Remove panel background
         panel.grid.major = element_blank(),  # Remove major grid lines
         panel.grid.minor = element_blank(),  # Remove minor grid lines
         panel.border = element_blank(),      # Remove panel border
         axis.line = element_line(color = "black"),
         legend.position = "none") +
-  annotate("text", x = 2021, y = 75, label = "Car", color = "blue", size = 3, fontface = "bold", angle = 90, vjust = 0.5) +
-  annotate("text", x = 2021, y = 25, label = "Truck", color = "blue", size = 3, fontface = "bold", angle = 90, vjust = 0.5)
+   geom_segment(aes(x = 2022, y = 0, xend = 2022, yend = 60), color = "#681CD1", size = 0.5, arrow = arrow(type = "closed", length = unit(0.05, "inches"), ends = "both")) +
+  geom_segment(aes(x = 2022, y = 60, xend = 2022, yend = 100), color = "#F17878", size = 0.5, arrow = arrow(type = "closed", length = unit(0.1, "inches"), ends = "both")) +
+  geom_rect(aes(xmin = 2018, xmax = 2024, ymin = 74, ymax = 82), fill = "white", size = 0.5, color = "#F17878") +
+  annotate("text", x = 2021, y = 78, label = "Car", color = "#F17878", size = 3) +
+  geom_rect(aes(xmin = 2018, xmax = 2027, ymin = 21, ymax = 29), fill = "white", size = 0.5, color = "#681CD1") +
+  annotate("text", x = 2022.5, y = 25, label = "Truck", size = 3, color = "#681CD1", fontface = "bold")
+
 
 
 # prep1: sort the "all" vehicle type file using regulatory_class & model_year
@@ -243,8 +247,9 @@ emission_vehicle <- ggplot(prep1, aes(x = model_year, y = real_world_co2_g_mi)) 
   geom_smooth(aes(color = regulatory_class),  # Color by regulatory class
               linetype = "solid",              # Set line type to solid
               size = 1) +                      # Set line size
-  scale_color_manual(values = c("Car" = "#A22F2F", "Truck" = "#77966D")) +  # Set custom colors
-  theme(strip.placement = "outside",  # Move facet labels outside
+  scale_color_manual(values = c("Car" = "#F17878", "Truck" = "#681CD1")) +  # Set custom colors
+  theme(plot.title = element_text(size = 11), # change title size 
+    strip.placement = "outside",  # Move facet labels outside
         strip.background = element_blank(),  # Remove background
         panel.background = element_blank(),  # Remove panel background
         panel.grid.major = element_blank(),  # Remove major grid lines
@@ -271,10 +276,10 @@ vehicle_type_100 + emission_vehicle +
   plot_annotation(
     title = "Overall Vehicle Trend of the Impact of Greenhouse Gas Emission",
     caption = 'Resource: EPA',
-    subtitle = "The left graph shows the production share of each segment, and the right graph shows the changes in car and truck energy efficiency. \nBased on the right graph, cars exhibit a significant improvement in energy efficiency compared to trucks.",
+    subtitle = "The normalized production share graph has seen a steady increase in truck vehicles, whereas a decrease in car vehicles \nover the last 20 years. The energy efficiency of vehicle type graph shows the efforts to reduce greenhouse gas emissions \nfrom car makers, and the slope of the graph represents the technology's own effort in reducing GHG emissions. It shows \nthat the slope of cars is steeper than that of trucks.",
     theme = theme(plot.title = element_text(face = "bold", size = 14),
-                  plot.subtitle = element_text(size = 12))
-  )
+                  plot.subtitle = element_text(size = 9))) + 
+  coord_cartesian(clip = "off") # Turn off clipping
 ```
 
 #### Third Visualization:
@@ -282,14 +287,11 @@ vehicle_type_100 + emission_vehicle +
 The third plot targets the general public, focusing on vehicle volume for well-known brands like Toyota, Mercedes, BMW, and Mazda. The graph emphasizes declining production volumes for car brands in the USA, suggesting a preference for trucks over cars. The aim is to convey that despite efforts to reduce GHG emissions, market preferences drive production towards higher-emission vehicles. The graph utilizes a segment format, with text providing additional information. Themes remain unaltered, as grid lines aid in number comparison. Typography is adjusted to match the first plot's manufacturing brand. Contextualizing data is deemed unnecessary due to brand recognition. The primary message is centered in the subtitle, and accessibility is enhanced by highlighting only specific brands. The data reflects a DEI perspective, ensuring public understanding of the graph's intention.
 
 ```{r}
-
 # ------------------------------
-#             Option 1-3
+#            Option 3 prep.
 # ------------------------------  
 
-## Filter the data from oringial data excluding "all" due to duplication of manufacturing data
-## note: all = adding all manufacturer data 
-
+# data prep ----
 
 # car filter data ----
 car_volume <- vehicle %>%
@@ -348,19 +350,7 @@ car_df <- data.frame(manufacturer = c1997$manufacturer,
                     start = c1997$production_000,
                     end = c2021$production_000) 
 # add new column 
-car_df$usa_brand <- ifelse(car_df$manufacturer %in% c("Toyota", "Mercedes", "Mazda", "BMW"), 1, 0)
-
-# car plot for geom_segment
-car_plt <- ggplot(car_df, aes(x = start, xend = end, 
-                   y = fct_reorder(manufacturer, manufacturer), yend = manufacturer)) + 
-  geom_segment(aes(position = "stack", color = factor(usa_brand)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
-  geom_point(aes(x = start, y = manufacturer), color = "#CCD437", size = 1.5) +
-  scale_color_manual(values = c("0" = "grey", "1" = "black"),
-                     labels = c("Start", "End", "Segment")) +
-  labs(x = "Production Volume (K)") +  # Set a general title
-  theme_minimal() +
-  theme(axis.title.y = element_blank(), 
-        plot.title = element_text(size = 14, family = "sen", face = "plain"))  # Remove background
+car_df$profit <- ifelse(car_df$manufacturer %in% c("Toyota", "Mercedes", "Mazda", "BMW"), 1, 0)
 
 # truck data df 
 truck_df <- data.frame(manufacturer = t1997$manufacturer,
@@ -368,26 +358,115 @@ truck_df <- data.frame(manufacturer = t1997$manufacturer,
                     end = t2021$production_000) 
 
 # sorted only usa brand 
-truck_df$usa_brand <- ifelse(truck_df$manufacturer %in% c("Toyota", "Mercedes", "Mazda", "BMW"), 1, 0)
+truck_df$profit <- ifelse(truck_df$manufacturer %in% c("Toyota", "Mercedes", "Mazda", "BMW"), 1, 0)
 
+
+```
+
+In the United States, there are 14 different car manufacturer brands with manufacturing plants.
+
+Here, I explored car and truck production across the major vehicle manufacturer brands from 1997 - 2021. You see those manufacturer brands on the y-axis and production volume on the x-axis for car and truck.
+
+```{r}
+# ------------------------------
+#             Option 3-1
+# ------------------------------  
+
+# Creating a plot with only the y-axis
+truck_plt <- ggplot(truck_df, aes(x = "", y = manufacturer)) +
+  geom_blank() +  # Adding a blank layer to remove any data points
+  theme_minimal() +
+  labs(y = "Manufacturer brand", x = NULL) +  # Keep y-axis, remove x-axis label
+  theme(axis.title.x = element_blank(),  # Remove x-axis label
+        axis.text.x = element_blank(),   # Remove x-axis ticks
+        axis.ticks.x = element_blank(),  # Remove x-axis ticks
+        panel.grid.major = element_blank(), # Remove major gridlines
+        panel.grid.minor = element_blank()) # Remove minor gridlines
+
+# show the plot
+truck_plt + plot_annotation(
+    title = "Volume Change by Vehicle Types (1997 - 2021) in USA",
+    caption = 'resource: EPA',
+    subtitle = "Over the past 14 years, the production of truck vehicles by manufacturers such as Toyota, Mercedes, Mazda, and BMW has shown \na significant increase, averaging 1200k per brand. In contrast, car production has experienced a decrease.",
+    theme = theme(plot.title = element_text(size = 14, face = "bold"),
+                  plot.subtitle = element_text(size = 9))) +
+  coord_cartesian(clip = "off") # Turn off clipping
+```
+
+Trucks are the primary source of greenhouse gas emissions compared to cars. By examining the manufacturing data of car companies, we can identify the brands that are the major contributors to greenhouse gas emissions. Focusing solely on truck production, we observe that Toyota, Mercedes, Mazda, and BMW have consistently produced the highest volumes, each exceeding 500k units from 1997 to 2021.
+
+```{r}
 # truck plot for geom_segment
 truck_plt <- ggplot(truck_df , aes(x = start, xend = end, 
                    y = fct_reorder(manufacturer, manufacturer), yend = manufacturer)) + 
-  geom_segment(aes(position = "stack", color = factor(usa_brand)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
+  geom_segment(aes(position = "stack", color = factor(profit)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
   geom_point(aes(x = start, y = manufacturer), color = "#CCD437", size = 1.5) +
   scale_color_manual(values = c("0" = "grey", "1" = "black"),
                      labels = c("Start", "End", "Segment")) +
-  labs(x = "Production Volume (K)", title = NULL) +  # Remove title
+  labs(x = "Production Volume (K)", title = "Truck", y = "Manufacturer Brand") +
+  # add box to highlighted one 
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 0.5, ymax = 1.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 6.5, ymax = 8.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 12.5, ymax = 13.5), fill = "transparent", size = 0.5, color = "#F17878") +
   theme_minimal() +
-  theme(axis.title.y = element_blank(),
-        plot.title = element_blank())  # Remove title
+  theme()  # Remove title
 
-# Combine plots with shared title
-car_plt + truck_plt + 
+# show the plot
+truck_plt + plot_layout(widths = c(1, 1)) + 
   plot_annotation(
     title = "Volume Change by Vehicle Types (1997 - 2021) in USA",
     caption = 'resource: EPA',
-    subtitle = "This graph primarily represents the car brands in the United States. It illustrates the significant fluctuation in production volumes among \nkey car brands, including Toyota, Mercedes, Mazda,and BMW.",
-    theme = theme(plot.title = element_text(size = 14, face = "bold"))
-  )
+    subtitle = "Over the past 14 years, the production of truck vehicles by manufacturers such as Toyota, Mercedes, Mazda, and BMW has shown \na significant increase, averaging 1200k per brand. In contrast, car production has experienced a decrease.",
+    theme = theme(plot.title = element_text(size = 14, face = "bold"),
+                  plot.subtitle = element_text(size = 9))) +
+  coord_cartesian(clip = "off") # Turn off clipping
+```
+
+Despite efforts by the EPA to reduce greenhouse gas emissions and regulate car emissions, trucks still maintain high energy efficiency, contributing significantly to GHG emissions. Particularly, Toyota, Mercedes, Mazda, and BMW have shown a trend of increasing truck production while simultaneously minimizing car production through concerted efforts. Consequently, these four brands have made substantial contributions to greenhouse gas emissions compared to others.
+
+```{r}
+
+# car plot for geom_segment
+car_plt <- ggplot(car_df, aes(x = start, xend = end, 
+                   y = fct_reorder(manufacturer, manufacturer), yend = manufacturer)) + 
+  geom_segment(aes(position = "stack", color = factor(profit)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
+  geom_point(aes(x = start, y = manufacturer), color = "#CCD437", size = 1.5) +
+  scale_color_manual(values = c("0" = "grey", "1" = "black"),
+                     labels = c("Start", "End", "Segment")) +
+  labs(x = "Production Volume (K)", title = "Car", y = NULL) +  # Set a general title
+  theme_minimal() +
+  theme(axis.title.y = element_blank()) +
+    # add box to highlighted one 
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 0.5, ymax = 1.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 6.5, ymax = 8.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 12.5, ymax = 13.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  theme_minimal() +
+  theme(axis.title.y.left = element_blank(), 
+        axis.text.y.left = element_blank(),
+        axis.line.y = element_blank())  
+
+# truck ------
+truck_plt <- ggplot(truck_df , aes(x = start, xend = end, 
+                   y = fct_reorder(manufacturer, manufacturer), yend = manufacturer)) + 
+  geom_segment(aes(position = "stack", color = factor(profit)), arrow = arrow(type = "closed", length = unit(0.1, "inches")), show.legend = FALSE) +
+  geom_point(aes(x = start, y = manufacturer), color = "#CCD437", size = 1.5) +
+  scale_color_manual(values = c("0" = "grey", "1" = "black"),
+                     labels = c("Start", "End", "Segment")) +
+  labs(x = "Production Volume (K)", title = "Truck", y = "Manufacturer Brand") +
+  # add box to highlighted one 
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 0.5, ymax = 1.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 6.5, ymax = 8.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  geom_rect(aes(xmin = 0, xmax = 3000, ymin = 12.5, ymax = 13.5), fill = "transparent", size = 0.5, color = "#F17878") +
+  theme_minimal() +
+  theme()  # Remove title
+
+# Combine plots with shared title
+truck_plt + car_plt + 
+  plot_annotation(
+    title = "Volume Change by Vehicle Types (1997 - 2021) in USA",
+    caption = 'resource: EPA',
+    subtitle = "Over the past 14 years, the production of truck vehicles by manufacturers such as Toyota, Mercedes, Mazda, and BMW has shown \na significant increase, averaging 1200k per brand. In contrast, car production has experienced a decrease.",
+    theme = theme(plot.title = element_text(size = 14, face = "bold"),
+                  plot.subtitle = element_text(size = 9))) +
+  coord_cartesian(clip = "off") # Turn off clipping
 ```
