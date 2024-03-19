@@ -393,7 +393,7 @@ truck_plt + plot_annotation(
   coord_cartesian(clip = "off") # Turn off clipping
 ```
 
-Trucks are the primary source of greenhouse gas emissions compared to cars. By examining the manufacturing data of car companies, we can identify the brands that are the major contributors to greenhouse gas emissions. Focusing solely on truck production, we observe that Toyota, Mercedes, Mazda, and BMW have consistently produced the highest volumes, each exceeding 500k units from 1997 to 2021.
+Trucks are the primary source of greenhouse gas emissions compared to cars. By examining the manufacturing data of car companies, we can identify the brands that are the major contributors to greenhouse gas emissions. Focusing solely on truck production, we observe that Toyota, Mercedes, Mazda, and BMW have consistently produced the highest volumes, each exceeding 500k to 1500k units from 1997 to 2021.
 
 ```{r}
 # truck plot for geom_segment
