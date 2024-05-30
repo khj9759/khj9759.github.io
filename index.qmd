@@ -9,11 +9,11 @@ about:
   links:
     - icon: linkedin
       text: LinkedIn
-      href: https://www.linkedin.com/in/samanthacsik/
+      href: https://www.linkedin.com/in/haejin-kim-826542234/
     - icon: github
       text: GitHub
-      href: https://github.com/samanthacsik
+      href: https://github.com/khj9759/
     - icon: envelope
       text: Email
-      href: mailto:scsik@ucsb.edu
+      href: mailto:haejin_kim@bren.ucsb.edu
 ---
