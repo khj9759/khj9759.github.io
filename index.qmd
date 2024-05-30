@@ -12,7 +12,7 @@ about:
       href: https://www.linkedin.com/in/haejin-kim-826542234/
     - icon: github
       text: GitHub
-      href: https://github.com/khj9759/
+      href: https://github.com/khj9759/ 
     - icon: envelope
       text: Email
       href: mailto:haejin_kim@bren.ucsb.edu
