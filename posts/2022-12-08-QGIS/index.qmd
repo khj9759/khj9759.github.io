@@ -17,7 +17,7 @@ image: figure1.jpeg
 output: html_document
 ---
 
-## Abstract 
+## Abstract  
 
 California located the most active faults on the Ring of Fire. San Andreas fault line, the strongest line near the Ring of Fire, penetrating the California area, stretches along the central west coast of North America. My hypothesis model is based on the measure of the population near the fault lines in San Francisco Bay Area. I assume that near the fault lines have a high potential risk of earthquake. Comparing the actual model, which was published by California Geological Survey, contains the actual geological data and geographic features. The population of my hypothesis model is 1.5 times less than the actual model. Moreover, my hypothesis model shows no passing through any fault line in San Francisco city, but the actual model defines San Francisco city has a potential risk from earthquakes, which means there are no safe places in San Francisco Bay Area.
 
