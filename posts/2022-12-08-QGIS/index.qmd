@@ -1,5 +1,5 @@
 ---
-title: "Earthquake" 
+title: "Earthquake Hazard of San Francisco Bay Area" 
 description: "Earthquake Hazard of San Francisco Bay Area"
 author:
   - name: Haejin Kim
