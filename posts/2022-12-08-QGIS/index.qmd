@@ -17,7 +17,7 @@ image: figure1.jpeg
 output: html_document
 ---
 
-## Abstract  
+## Abstract
 
 California located the most active faults on the Ring of Fire. San Andreas fault line, the strongest line near the Ring of Fire, penetrating the California area, stretches along the central west coast of North America. My hypothesis model is based on the measure of the population near the fault lines in San Francisco Bay Area. I assume that near the fault lines have a high potential risk of earthquake. Comparing the actual model, which was published by California Geological Survey, contains the actual geological data and geographic features. The population of my hypothesis model is 1.5 times less than the actual model. Moreover, my hypothesis model shows no passing through any fault line in San Francisco city, but the actual model defines San Francisco city has a potential risk from earthquakes, which means there are no safe places in San Francisco Bay Area.
 
@@ -53,7 +53,7 @@ Particularly, this report used the QGIS program, which helps to define the proje
 
 Earthquake Shaking potential data particularly takes a lot of work to modify the data. This is the actual model for measured earthquake shaking potential by including geological and geographic features information. First, Earthquake shaking potential data doesn't define the zone area. I divided the five different zones by 1.0-second spectral acceleration (SA10) and scaled 0.4 ranges each. The earthquake shaking potential data was not matched with the geometric way. This data used the fix geometries tool to match with the population data. Afterward, using the by join attributed function by location, the number of people living in each zone can be figured out.
 
-## Results 
+## Results
 
 Overall population living near seismic fault lines
 
@@ -113,7 +113,7 @@ There are some limitations to address the result. First, my census data wasn't r
 
 Earthquake shaking carries different kind of potential risk such as landslide, tsunami, and mineral hazard. Mostly, it is major causes of landslides. Landslides happened when rocks or earth material or debris fall down a slope. Landslides occurs anywhere if the condition is proper, and this is reason to damage properties and causalities to people. (Nature) To prevent such damage, it would be necessary to consider such damages into the potential earthquake shaking risk. It would be helped to define more accurate population affected from earthquake shaking.
 
-## Reference 
+## Reference
 
 National Archives, San Francisco Earthquake (1906), https://www.archives.gov/legislative/features/sf USGS,
 
