@@ -13,7 +13,7 @@ format:
     code-fold: true
     code-summary: "Code"
 categories: [QGIS] # Corrected spacing in categories
-image: car.jpeg
+image: figure1.jpeg
 output: html_document
 ---
 
