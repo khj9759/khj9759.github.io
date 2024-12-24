@@ -75,7 +75,7 @@ Figure 4 shows clearer the population of each county. The blue bar represents th
 
 **Table 2**: Population of living near all fault lines, and San Andreas fault line 　
 
-![](table2.png)
+![](table2.png){width="543"}
 
 The major impact of the potential earthquake comes from San Andreas fault lines. The article discussed the San Andreas rupture along and the strong possibility of joint rupture in the future. (Julian C. Lozos, 2016) In Figure 2, San Andreas pass through Marin, San Mateo and Santa Clara counties. However, Table 2 shows that 91% people in San Mateo live near the San Andreas fault lines.
 
@@ -93,7 +93,7 @@ Based on the data, earthquake shaking potential is divided into 5 different zone
 
 **Table 3**: population based on the earthquake shaking zone 　
 
-![](table3.png)
+![](table3.png){width="473"}
 
 Table 3 shows that Zone 3 and Zone 4 are the major earthquake shaking impact on San Francisco Bay Area. No county includes Zone 1, so it means that there are no safe places in San Francisco Bay Area.
 
